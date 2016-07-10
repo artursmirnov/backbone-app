@@ -1,6 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Application form{% endblock %}
+
 {% block body %}
     <p>Url for ajax form submit: {{ path('process.form') }}</p>
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="/bundles/app/app.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="/bundles/app/vendor.js"></script>
+    <script type="text/javascript" src="/bundles/app/app.js"></script>
+{% endblock %}

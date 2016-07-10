@@ -10,6 +10,9 @@ Installation process for debian-based systems.
 * Any webserver: [Apache](installation.md#markdown-header-apache-settings), nginx etc.
 * [Mysql](installation.md#markdown-header-mysql-databases)
 * GIT
+* Node.js & npm: [NVM](https://github.com/creationix/nvm)
+* Ruby & Compass: [RVM](https://rvm.io) & [Compass gem](http://compass-style.org/install/)
+* Brunch: `npm install -g brunch`
 
 ```
 sudo su
@@ -60,3 +63,11 @@ Install vendors:
     ``` php app/console doctrine:schema:create ```
 - Load doctrine fixtures
     ``` php app/console doctrine:fixtures:load ```
+
+# UI application
+
+In order to build the UI application:
+```
+cd src/Client
+brunch build --production
+```

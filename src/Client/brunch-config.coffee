@@ -1,0 +1,34 @@
+# See http://brunch.io for documentation.
+
+module.exports =
+
+  paths:
+    public: '../../web/bundles/app'
+
+  files:
+
+    javascripts:
+      joinTo:
+        'app.js': /^app/
+        'vendor.js': /^(?!app)/
+
+    stylesheets:
+      joinTo: 'app.css'
+
+    templates:
+      joinTo: 'app.js'
+
+  plugins:
+
+    sass:
+      allowCache: true
+      sourceMapEmbed: true
+
+    postcss:
+      processors: [
+        require('autoprefixer')(['ie >= 9', 'last 3 versions']) # https://github.com/ai/browserslist#queries
+      ]
+
+    coffeelint:
+      options: {}
+        # http://www.coffeelint.org/#options

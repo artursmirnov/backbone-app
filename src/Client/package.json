@@ -1,0 +1,35 @@
+{
+  "name": "test-task-frontend",
+  "description": "",
+  "version": "1.0.0",
+  "author": "Artur Smirnov",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artursmirnov/test-task-frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/artursmirnov/test-task-frontend/issues"
+  },
+  "homepage": "https://github.com/artursmirnov/test-task-frontend#readme",
+  "scripts": {
+    "start": "brunch watch --server",
+    "build": "brunch build --production"
+  },
+  "dependencies": {
+    "backbone.marionette": "^2.4.7",
+    "jquery": "^2.2.4"
+  },
+  "devDependencies": {
+    "auto-reload-brunch": "^2.0.0",
+    "autoprefixer": "^6.3.7",
+    "clean-css-brunch": "^2.0.0",
+    "coffee-script-brunch": "^2.0.0",
+    "coffeelint-brunch": "^2.0.0",
+    "css-brunch": "^2.0.0",
+    "javascript-brunch": "^2.0.0",
+    "postcss-brunch": "^0.5.0",
+    "sass-brunch": "^2.6.3",
+    "uglify-js-brunch": "^2.0.0"
+  }
+}
