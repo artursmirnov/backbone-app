@@ -1,0 +1,59 @@
+<div class="user-info">
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="card">
+
+                <p class="user-info__field user-info__field--thin user-info__field--exposed">
+                    {{ user.userName }}
+                </p>
+
+                <p class="user-info__field user-info__field--thin">
+                    {{ user.userBirthday }}
+                </p>
+
+                <p class="user-info__field user-info__field--thin">
+                    <a href="mailto:{{ user.userEmail }}">
+                        {{ user.userEmail }}
+                    </a>
+                </p>
+
+            </div>
+        </div>
+        <div class="col-xs-7">
+            <div class="card">
+                <div class="row">
+                    <div class="col-xs-3 text-right">
+
+                        <p class="user-info__field">
+                            <a href="{{ user.siteUrl }}" target="_blank" title="Link will open in new tab">
+                                {{ user.siteUrl }}
+                            </a>
+                        </p>
+
+                        <p class="user-info__field">
+                            {{ user.userPhone }}
+                        </p>
+
+                        <p class="user-info__field">
+                            {% if user.userSkill %}
+                                Skill {{ user.userSkill }}
+                            {% endif %}
+                        </p>
+
+                        <p class="user-info__field">
+                            {{ user.userGender|capitalize }}
+                        </p>
+
+                    </div>
+                    <div class="col-xs-7">
+
+                        <p class="user-info__field">
+                            {{ user.userAbout }}
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

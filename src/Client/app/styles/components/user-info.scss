@@ -1,0 +1,24 @@
+@import "../variables";
+
+.user-info {
+}
+
+.user-info__field {
+  padding: 0;
+  margin: 0;
+  font-weight: 300;
+
+  a {
+    color: $text-color;
+    text-decoration: none;
+  }
+}
+
+.user-info__field--thin {
+  font-weight: 100;
+}
+
+.user-info__field--exposed {
+  font-size: 1.7em;
+  margin-bottom: 15px;
+}

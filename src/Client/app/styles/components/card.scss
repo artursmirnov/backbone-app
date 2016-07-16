@@ -1,0 +1,7 @@
+@import "../variables";
+
+.card {
+  padding: 15px;
+  background-color: $card-bg;
+  box-shadow: 1px -1px 4px $card-border-color;
+}
