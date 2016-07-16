@@ -1,0 +1,51 @@
+@import "../variables";
+@import "../bootstrap";
+
+.header {
+  padding: 92px 0 53px;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.header__title {
+  font-weight: 100;
+  font-size: 2.9em;
+  letter-spacing: -1px;
+  text-shadow: 0 0 0.005px $header-title-text-color;
+  color: $header-title-text-color;
+  margin: 0;
+}
+
+.header__button {
+  @extend .btn;
+  @extend .btn-default;
+
+  height: 36px;
+  width: 130px;
+  outline: none;
+  border: none;
+  border-radius: 18px;
+  color: #b3b3b3;
+  font-size: 1.2em;
+  letter-spacing: 1px;
+
+  &:focus,
+  &:active,
+  &:focus:active,
+  &:hover {
+    border: none;
+    outline: none;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .header__button {
+    display: block;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .header__title {
+    font-size: 2.5em;
+  }
+}

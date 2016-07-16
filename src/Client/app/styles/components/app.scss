@@ -1,5 +1,11 @@
 @import "../variables";
 
 #app {
-  font-family: $main_font_family, sans-serif;
+  max-width: $app-max-width;
+  min-width: $app-min-width;
+  margin: 0 auto;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
 }

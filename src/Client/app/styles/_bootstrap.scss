@@ -1,10 +1,7 @@
 // Bootstrap config
+@import "variables";
 
-$grid-columns: 10;
-
-// Imports
-
+// Bootstrap import
 @import "../../../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap";
-
 
 // Bootstrap overrides
