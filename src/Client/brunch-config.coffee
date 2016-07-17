@@ -18,6 +18,9 @@ module.exports =
     templates:
       joinTo: 'app.js'
 
+  modules:
+    nameCleaner: (path) -> path.replace 'app/scripts/', ''
+
   plugins:
 
     sass:

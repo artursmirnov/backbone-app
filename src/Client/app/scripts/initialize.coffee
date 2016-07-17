@@ -2,7 +2,7 @@ window.$ = require 'jquery'
 Backbone = require 'backbone'
 Marionette = require 'backbone.marionette'
 
-App = require 'components/App'
+App = require 'App'
 
 window.__agent?.start Backbone, Marionette
 
