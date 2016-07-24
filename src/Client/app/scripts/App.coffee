@@ -1,10 +1,8 @@
 Marionette = require 'backbone.marionette'
 
+Router = require 'Router'
+
 module.exports = Marionette.Application.extend
 
-  regions:
-    app: '#app'
-
-  initialize: ->
-    @on 'start', =>
-      @getRegion('app').show();
+  onStart: ->
+    Router.start()
