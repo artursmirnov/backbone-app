@@ -3,16 +3,16 @@
         <div class="col-xs-3">
             <div class="card">
 
-                <p class="user-info__field user-info__field--thin user-info__field--exposed">
+                <p class="user-info__field user-info__field--thin user-info__field--exposed js-user-name">
                     {{ user.userName }}
                 </p>
 
-                <p class="user-info__field user-info__field--thin">
+                <p class="user-info__field user-info__field--thin js-user-birthday">
                     {{ user.userBirthday }}
                 </p>
 
                 <p class="user-info__field user-info__field--thin">
-                    <a href="mailto:{{ user.userEmail }}">
+                    <a href="mailto:{{ user.userEmail }}" class="js-user-email">
                         {{ user.userEmail }}
                     </a>
                 </p>
@@ -25,29 +25,29 @@
                     <div class="col-xs-3 text-right">
 
                         <p class="user-info__field">
-                            <a href="{{ user.siteUrl }}" target="_blank" title="Link will open in new tab">
+                            <a href="{{ user.siteUrl }}" target="_blank" title="Link will open in new tab" class="js-user-site">
                                 {{ user.siteUrl }}
                             </a>
                         </p>
 
-                        <p class="user-info__field">
+                        <p class="user-info__field js-user-phone">
                             {{ user.userPhone }}
                         </p>
 
                         <p class="user-info__field">
                             {% if user.userSkill %}
-                                Skill {{ user.userSkill }}
+                                Skill <span class="js-user-skill">{{ user.userSkill }}</span>
                             {% endif %}
                         </p>
 
-                        <p class="user-info__field">
+                        <p class="user-info__field js-user-gender">
                             {{ user.userGender|capitalize }}
                         </p>
 
                     </div>
                     <div class="col-xs-7">
 
-                        <p class="user-info__field">
+                        <p class="user-info__field js-user-about">
                             {{ user.userAbout }}
                         </p>
 
