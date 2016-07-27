@@ -4,6 +4,9 @@ User = require 'models/User'
 
 HeaderView = require 'views/HeaderView'
 UserInfoView = require 'views/UserInfoView'
+EditFormView = require 'views/EditFormView'
+
+ModalView = require 'views/ModalView'
 
 SELECTORS =
   APP: '#app'
@@ -17,6 +20,8 @@ module.exports = Marionette.LayoutView.extend
   regions:
     header: SELECTORS.HEADER
     userInfo: SELECTORS.USER_INFO
+    modal:
+      el: $('<div/>').appendTo('body')
 
 
   initialize: ->
@@ -28,12 +33,16 @@ module.exports = Marionette.LayoutView.extend
 
   onShowUserInfo: ->
     console.log 'user info'
+    @getRegion('modal').empty()
 
   onShowEditForm: ->
-    console.log 'edit user'
+    console.log 'show edit form'
+    editView = new EditFormView model: @user
+    modalView = new ModalView bodyView: editView
+    @getRegion('modal').show modalView
 
   _attachHeaderView: ->
-    headerView = new HeaderView el: SELECTORS.HEADER, model: @user
+    headerView = new HeaderView el: SELECTORS.HEADER
     @getRegion('header').attachView headerView
     headerView.render()
 

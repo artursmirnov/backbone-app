@@ -1,4 +1,7 @@
 Marionette = require 'backbone.marionette'
+Backbone = require 'backbone'
+
+Router = require 'Router'
 
 module.exports = Marionette.ItemView.extend
   template: false
@@ -10,5 +13,5 @@ module.exports = Marionette.ItemView.extend
     'click @ui.editButton': 'openEditForm'
 
   openEditForm: ->
-    console.log 'Opened edit form'
+    Backbone.history.navigate 'edit', trigger: true
 

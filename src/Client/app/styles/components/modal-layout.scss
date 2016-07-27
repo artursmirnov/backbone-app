@@ -1,0 +1,34 @@
+@import "../variables";
+@import "../mixins/stretch-to-offset-parent";
+
+.modal-layout {
+  @include stretch-to-offset-parent();
+
+  position: fixed;
+  background: $modal-layout-backdrop-bg;
+  z-index: $modal-layout-backdrop-z-index;
+}
+
+.modal-layout__dialog {
+  background: $modal-layout-dialog-bg;
+  max-width: $modal-layout-max-width;
+  margin: 0 auto;
+  z-index: $modal-layout-dialog-z-index;
+  box-shadow: 0 0 10px 1px #000000;
+}
+
+.modal-layout__header {
+  border-bottom: 1px solid #e7e7e7;
+  padding: $modal-layout-padding;
+}
+
+.modal-layout__title {
+  text-align: center;
+  font-size: 1.3em;
+}
+
+.modal-layout__body {
+  padding: $modal-layout-padding;
+  max-width: $modal-layout-body-max-width;
+  margin: 0 auto;
+}
