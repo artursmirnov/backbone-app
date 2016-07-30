@@ -1,5 +1,6 @@
 @import "../variables";
 @import "../bootstrap";
+@import "../mixins/no-button-outline";
 
 .header {
   padding: 92px 0 53px;
@@ -19,23 +20,14 @@
 .header__button {
   @extend .btn;
   @extend .btn-default;
+  @include no-button-outline();
 
   height: 36px;
   width: 130px;
-  outline: none;
-  border: none;
   border-radius: 18px;
   color: #b3b3b3;
   font-size: 1em;
   letter-spacing: 1px;
-
-  &:focus,
-  &:active,
-  &:focus:active,
-  &:hover {
-    border: none;
-    outline: none;
-  }
 }
 
 @media screen and (max-width: 550px) {

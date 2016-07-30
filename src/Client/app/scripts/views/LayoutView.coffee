@@ -1,4 +1,5 @@
 Marionette = require 'backbone.marionette'
+Backbone = require 'backbone'
 
 User = require 'models/User'
 
@@ -7,6 +8,7 @@ UserInfoView = require 'views/UserInfoView'
 EditFormView = require 'views/EditFormView'
 
 ModalView = require 'views/ModalView'
+ModalRegion = require 'regions/ModalRegion'
 
 SELECTORS =
   APP: '#app'
@@ -21,7 +23,7 @@ module.exports = Marionette.LayoutView.extend
     header: SELECTORS.HEADER
     userInfo: SELECTORS.USER_INFO
     modal:
-      el: $('<div/>').appendTo('body')
+      regionClass: ModalRegion
 
 
   initialize: ->
@@ -32,13 +34,19 @@ module.exports = Marionette.LayoutView.extend
     @_attachUserInfoView()
 
   onShowUserInfo: ->
-    console.log 'user info'
     @getRegion('modal').empty()
 
   onShowEditForm: ->
-    console.log 'show edit form'
     editView = new EditFormView model: @user
+
     modalView = new ModalView bodyView: editView
+
+    modalView.on 'action:primary', ->
+      console.log('primary action')
+
+    modalView.on 'close', ->
+      Backbone.history.navigate '', trigger: true
+
     @getRegion('modal').show modalView
 
   _attachHeaderView: ->

@@ -1,0 +1,12 @@
+@mixin no-button-outline {
+  outline: none;
+  border: none;
+
+  &:focus,
+  &:active,
+  &:focus:active,
+  &:hover {
+    border: none;
+    outline: none;
+  }
+}

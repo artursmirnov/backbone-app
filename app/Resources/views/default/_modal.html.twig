@@ -1,9 +1,17 @@
 <script type="text/template" id="modal-template">
     <div class="modal-layout">
-        <div class="modal-layout__dialog">
+        <div class="modal-layout__dialog js-modal-dialog">
             <div class="modal-layout__header">
+                <div class="modal-layout__controls">
+                    <button class="modal-layout__action--secondary js-secondary-action">
+                        <%= secondaryActionTitle %>
+                    </button>
+                    <span class="modal-layout__controls-divider"></span>
+                    <button class="modal-layout__action--primary js-primary-action">
+                        <%= primaryActionTitle %>
+                    </button>
+                </div>
                 <div class="modal-layout__title"><%= title %></div>
-                <div class="modal-layout__controls"></div>
             </div>
             <div class="modal-layout__body js-modal-body"></div>
         </div>

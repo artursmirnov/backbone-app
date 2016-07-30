@@ -1,5 +1,7 @@
 @import "../variables";
+@import "../bootstrap";
 @import "../mixins/stretch-to-offset-parent";
+@import "../mixins/no-button-outline";
 
 .modal-layout {
   @include stretch-to-offset-parent();
@@ -7,17 +9,24 @@
   position: fixed;
   background: $modal-layout-backdrop-bg;
   z-index: $modal-layout-backdrop-z-index;
+  opacity: 0;
+  transition: opacity 0.2s linear;
 }
 
 .modal-layout__dialog {
+  position: relative;
+  top: -100px;
   background: $modal-layout-dialog-bg;
   max-width: $modal-layout-max-width;
   margin: 0 auto;
   z-index: $modal-layout-dialog-z-index;
   box-shadow: 0 0 10px 1px #000000;
+  transition: top 0.2s linear;
 }
 
 .modal-layout__header {
+  @extend .clearfix;
+
   border-bottom: 1px solid #e7e7e7;
   padding: $modal-layout-padding;
 }
@@ -25,10 +34,72 @@
 .modal-layout__title {
   text-align: center;
   font-size: 1.3em;
+  font-weight: 300;
 }
 
 .modal-layout__body {
   padding: $modal-layout-padding;
   max-width: $modal-layout-body-max-width;
   margin: 0 auto;
+}
+
+.modal-layout__controls {
+  float: right;
+  white-space: nowrap;
+  position: relative;
+  height: 25px;
+  overflow: hidden;
+}
+
+.modal-layout__action {
+  @extend .btn;
+  @extend .btn-link;
+  @include no-button-outline();
+
+  position: relative;
+  top: -4px;
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+.modal-layout__action--primary {
+  @extend .modal-layout__action;
+}
+
+.modal-layout__action--secondary {
+  @extend .modal-layout__action;
+
+  color: #bababa;
+
+  &:hover {
+    color: #9a9a9a;
+  }
+}
+
+.modal-layout__controls-divider {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  width: 0;
+  height: 22px;
+  border-left: 1px solid #e1e1e1;
+  vertical-align: text-bottom;
+}
+
+@media screen and (max-width: 500px) {
+  .modal-layout__title {
+    text-align: left;
+  }
+}
+
+.opened {
+
+  .modal-layout {
+    opacity: 1;
+  }
+
+  .modal-layout__dialog {
+    top: 0;
+  }
+
 }

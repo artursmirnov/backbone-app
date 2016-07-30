@@ -6,25 +6,44 @@ module.exports = Marionette.LayoutView.extend
   title: ''
   body: null
 
+  primaryActionTitle: 'Save'
+  secondaryActionTitle: 'Cancel'
+
   regions:
     body: '.js-modal-body'
 
+  ui:
+    primaryAction: '.js-primary-action'
+    secondaryAction: '.js-secondary-action'
+
+  triggers:
+    'click @ui.primaryAction': 'action:primary'
+    'click @ui.secondaryAction': 'action:secondary'
+
   initialize: (options) ->
+    options = options || {}
+
     bodyView = options.bodyView
     if bodyView instanceof Marionette.View
       @body = bodyView
       @title = bodyView.title || ''
 
-  # TODO attach to body
+    @primaryActionTitle = options.primaryActionTitle || @primaryActionTitle
+    @secondaryActionTitle = options.secondaryActionTitle || @secondaryActionTitle
 
   serializeData: ->
     title: @title
+    primaryActionTitle: @primaryActionTitle
+    secondaryActionTitle: @secondaryActionTitle
 
   onRender: ->
     @getRegion('body').show @body
 
+  onActionSecondary: ->
+    @close()
+
   open: ->
-    debugger
+    @trigger 'open'
 
   close: ->
-    debugger
+    @trigger 'close'
