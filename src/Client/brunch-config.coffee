@@ -35,3 +35,8 @@ module.exports =
     coffeelint:
       options: {}
         # http://www.coffeelint.org/#options
+
+    copycat:
+      fonts: ['node_modules/font-awesome/fonts']
+      verbose: true
+      onlyChanged: true
