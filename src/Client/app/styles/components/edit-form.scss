@@ -1,4 +1,5 @@
 @import "../bootstrap";
+@import "../material-icons";
 @import "../variables";
 @import "../mixins/shift-label";
 
@@ -69,4 +70,31 @@ textarea.edit-form__input--textarea {
 
   resize: none;
   overflow: hidden;
+}
+
+.edit-form__radio {
+  font-weight: 300;
+  font-size: 1.1em;
+  color: $form-input-color;
+  cursor: pointer;
+  margin: 9px 0;
+
+  &:before {
+    @extend .material-icons;
+    content: 'radio_button_unchecked';
+
+    margin-right: 6px;
+    font-weight: 100;
+    font-size: 1.5em;
+    vertical-align: bottom;
+  }
+
+  &.selected {
+    color: #000000;
+
+    &:before {
+      content: 'check_circle';
+      color: $form-input-active-color;
+    }
+  }
 }

@@ -37,6 +37,6 @@ module.exports =
         # http://www.coffeelint.org/#options
 
     copycat:
-      fonts: ['node_modules/font-awesome/fonts']
+      fonts: ['node_modules/material-design-icons/iconfont']
       verbose: true
       onlyChanged: true
