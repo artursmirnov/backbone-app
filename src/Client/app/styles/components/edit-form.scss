@@ -32,7 +32,8 @@
 .edit-form__input {
   @extend .form-control;
 
-  height: auto;
+  height: 40px;
+  line-height: inherit;
   border-radius: 0;
   border: none;
   box-shadow: none;
