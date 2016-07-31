@@ -6,6 +6,7 @@
         <div class="row">
             <div class="col-sm-5">
 
+                {# User Name #}
                 <div class="edit-form__field js-field">
                     <input type="text" value="<%= name %>" class="edit-form__input js-user-name">
                     <label class="edit-form__label">User Name</label>
@@ -14,6 +15,7 @@
             </div>
             <div class="col-sm-4">
 
+                {# Birthday #}
                 <div class="edit-form__field js-field">
                     <input type="text" value="<%= birthday %>" class="edit-form__input js-user-birthday">
                     <label class="edit-form__label">Birthdate</label>
@@ -24,6 +26,7 @@
         <div class="row">
             <div class="col-sm-5">
 
+                {# Email #}
                 <div class="edit-form__field js-field">
                     <input type="text" value="<%= email %>" class="edit-form__input js-user-email">
                     <label class="edit-form__label">Email</label>
@@ -32,9 +35,81 @@
             </div>
             <div class="col-sm-5">
 
+                {# Site URL #}
                 <div class="edit-form__field js-field">
                     <input type="text" value="<%= siteUrl %>" class="edit-form__input js-user-site">
                     <label class="edit-form__label">URL</label>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+
+                {# Phone number #}
+                <div class="edit-form__field js-field">
+                    <input type="text" value="<%= phone %>" class="edit-form__input js-user-phone">
+                    <label class="edit-form__label">Phone number</label>
+                </div>
+
+            </div>
+            <div class="col-sm-5">
+                <div class="row">
+                    <div class="col-xs-4">
+
+                        {# Skill number #}
+                        <div class="edit-form__field js-field">
+                            <input type="text" value="<%= skill %>" class="edit-form__input js-user-skill">
+                            <label class="edit-form__label">Skill number</label>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-3 text-right">
+
+                        {# Gender Male #}
+                        Male
+
+                    </div>
+                    <div class="col-xs-3 text-right">
+
+                        {# Gender Female #}
+                        Female
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="row">
+                    <div class="col-sm-5">
+
+                        {# Password #}
+                        <div class="edit-form__field js-field">
+                            <input type="password" value="" class="edit-form__input js-user-password">
+                            <label class="edit-form__label">Password</label>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-5">
+
+                        {# Password confirmation #}
+                        <div class="edit-form__field js-field">
+                            <input type="password" value="" class="edit-form__input js-user-password-confirm">
+                            <label class="edit-form__label">Repeat Password</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10">
+
+                {# About #}
+                <div class="edit-form__field js-field">
+                    <textarea class="edit-form__input--textarea js-user-about" value="<%= about %>" rows="1"></textarea>
+                    <label class="edit-form__label">Enter a brief description of yourself and interest</label>
                 </div>
 
             </div>
