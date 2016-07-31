@@ -67,13 +67,17 @@
                     <div class="col-xs-3 text-right">
 
                         {# Gender Male #}
-                        Male
+                        <label class="edit-form__radio js-user-gender-male <%= isMale ? 'selected' : '' %>">
+                            Male
+                        </label>
 
                     </div>
                     <div class="col-xs-3 text-right">
 
                         {# Gender Female #}
-                        Female
+                        <label class="edit-form__radio js-user-gender-female <%= isFemale ? 'selected' : '' %>">
+                            Female
+                        </label>
 
                     </div>
                 </div>
