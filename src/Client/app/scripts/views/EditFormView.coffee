@@ -9,9 +9,18 @@ module.exports = Marionette.ItemView.extend
 
   ui:
     textareas: 'textarea'
+    name: '.js-user-name'
     birthday: '.js-user-birthday'
+    email: '.js-user-email'
+    site: '.js-user-site'
+    phone: '.js-user-phone'
+    skill: '.js-user-skill'
+    password: '.js-user-password'
+    confirm: '.js-user-password-confirm'
+    about: '.js-user-about'
     genderMale: '.js-user-gender-male'
     genderFemale: '.js-user-gender-female'
+
 
   events:
     'input @ui.textareas': 'resizeTextarea'
@@ -19,6 +28,8 @@ module.exports = Marionette.ItemView.extend
     'blur @ui.birthday': 'transformBirthdayToText'
     'click @ui.genderMale': 'setMale'
     'click @ui.genderFemale': 'setFemale'
+    'change input': 'updateModel'
+    'change textarea': 'updateModel'
 
   templateHelpers: ->
     isMale: @model.isMale()
@@ -41,7 +52,18 @@ module.exports = Marionette.ItemView.extend
     @ui.birthday.attr(type: 'text').val(value).trigger('input')
 
   setMale: ->
+    console.log @model
     @model.setMale()
 
   setFemale: ->
     @model.setFemale()
+
+  updateModel: ->
+    @model.deserialize
+      name: @ui.name.val()
+      birthday: @ui.birthday.val()
+      email: @ui.email.val()
+      siteUrl: @ui.site.val()
+      phone: @ui.phone.val()
+      skill: @ui.skill.val()
+      about: @ui.about.val()
