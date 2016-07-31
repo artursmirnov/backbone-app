@@ -7,7 +7,13 @@ $modal-layout-dialog-bg: $body-bg;
 // Fonts
 $font-family-base: "Roboto";
 $font-size-base: 14px;
+
+// Colors
 $text-color: #4a4a4a;
+$header-color: #4a4a4a;
+$card-border-color: #f1f1f2;
+$form-input-color: #b9b9b9;
+$form-input-active-color: #26abec;
 
 // Layout
 $grid-columns: 10;
@@ -15,13 +21,14 @@ $app-max-width: 1375px;
 $app-min-width: 350px;
 $modal-layout-max-width: 1440px;
 $modal-layout-body-max-width: 790px;
+$form-group-margin-bottom: 22px;
 
 // Z-index
+$form-input-label-z-index: 1;
+$form-input-z-index: $form-input-label-z-index + 1;
 $modal-layout-base-z-index: 100;
 $modal-layout-backdrop-z-index: $modal-layout-base-z-index + 1;
 $modal-layout-dialog-z-index: $modal-layout-backdrop-z-index + 1;
 
 // Components specific variables
-$header-title-text-color: #4a4a4a;
-$card-border-color: #f1f1f2;
 $modal-layout-padding: 17px;

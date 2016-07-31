@@ -1,0 +1,63 @@
+@import "../bootstrap";
+@import "../variables";
+@import "../mixins/shift-label";
+
+.edit-form {
+  @extend .form-horizontal;
+}
+
+.edit-form__title {
+  font-size: 1.9em;
+  padding: 0;
+  margin: 85px 0 55px 0;
+}
+
+.edit-form__field {
+  display: block;
+  width: 100%;
+  position: relative;
+  margin-bottom: $form-group-margin-bottom;
+}
+
+.edit-form__label {
+  position: absolute;
+  top: 10px;
+  font-weight: 300;
+  font-size: 1.1em;
+  color: $form-input-color;
+  transition: font 0.2s ease, top 0.2s ease;
+  z-index: $form-input-label-z-index;
+}
+
+.edit-form__input {
+  @extend .form-control;
+
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  border-bottom: 1px solid lighten($form-input-color, 15%);
+  background: transparent;
+  font-weight: 300;
+  padding: 20px 0;
+  font-size: 1.1em;
+  outline: none;
+  position: relative;
+  z-index: $form-input-z-index;
+
+  &:focus {
+    box-shadow: none;
+    outline: none;
+    border-color: $form-input-active-color;
+
+    & ~ .edit-form__label {
+      @include shift-label();
+      color: darken($form-input-active-color, 6%);
+    }
+  }
+
+  &:not([value=""]) {
+    & ~ .edit-form__label {
+      @include shift-label();
+    }
+  }
+}

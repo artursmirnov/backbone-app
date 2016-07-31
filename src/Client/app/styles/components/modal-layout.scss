@@ -10,7 +10,7 @@
   background: $modal-layout-backdrop-bg;
   z-index: $modal-layout-backdrop-z-index;
   opacity: 0;
-  transition: opacity 0.2s linear;
+  transition: opacity 0.2s ease;
 }
 
 .modal-layout__dialog {
@@ -21,7 +21,7 @@
   margin: 0 auto;
   z-index: $modal-layout-dialog-z-index;
   box-shadow: 0 0 10px 1px #000000;
-  transition: top 0.2s linear;
+  transition: top 0.2s ease;
 }
 
 .modal-layout__header {

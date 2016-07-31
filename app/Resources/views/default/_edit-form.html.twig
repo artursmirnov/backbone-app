@@ -1,5 +1,44 @@
 <script type="text/template" id="edit-form-template">
-    <div id="edit-form">
-        Form content
+    <div id="edit-form" class="edit-form container-fluid">
+
+        <h2 class="edit-form__title">Application form</h2>
+
+        <div class="row">
+            <div class="col-sm-5">
+
+                <div class="edit-form__field js-field">
+                    <input type="text" value="<%= name %>" class="edit-form__input js-user-name">
+                    <label class="edit-form__label">User Name</label>
+                </div>
+
+            </div>
+            <div class="col-sm-4">
+
+                <div class="edit-form__field js-field">
+                    <input type="text" value="<%= birthday %>" class="edit-form__input js-user-birthday">
+                    <label class="edit-form__label">Birthdate</label>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+
+                <div class="edit-form__field js-field">
+                    <input type="text" value="<%= email %>" class="edit-form__input js-user-email">
+                    <label class="edit-form__label">Email</label>
+                </div>
+
+            </div>
+            <div class="col-sm-5">
+
+                <div class="edit-form__field js-field">
+                    <input type="text" value="<%= siteUrl %>" class="edit-form__input js-user-site">
+                    <label class="edit-form__label">URL</label>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </script>
