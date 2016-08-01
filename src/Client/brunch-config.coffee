@@ -38,5 +38,5 @@ module.exports =
 
     copycat:
       fonts: ['node_modules/material-design-icons/iconfont']
-      verbose: true
+      verbose: false
       onlyChanged: true

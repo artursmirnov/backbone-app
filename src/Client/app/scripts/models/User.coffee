@@ -12,8 +12,9 @@ User = Backbone.Model.extend
     gender: null
     about: ''
 
-  deserialize: (data) ->
-    data = data || {}
+  deserialize: (data = {}) ->
+    if data instanceof Backbone.Model then data = data.toJSON()
+    @_extractGender data
     @set(data)
 
   isMale: ->
@@ -27,6 +28,12 @@ User = Backbone.Model.extend
 
   setFemale: ->
     @set 'gender', User.GENDER.FEMALE
+
+  _extractGender: (data) ->
+    switch data.gender?.toLowerCase()
+      when User.GENDER.MALE then @setMale()
+      when User.GENDER.FEMALE then @setFemale()
+    delete data.gender
 
 User.GENDER =
   MALE: 'male'
