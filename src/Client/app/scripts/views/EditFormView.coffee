@@ -52,7 +52,6 @@ module.exports = Marionette.ItemView.extend
     @ui.birthday.attr(type: 'text').val(value).trigger('input')
 
   setMale: ->
-    console.log @model
     @model.setMale()
 
   setFemale: ->

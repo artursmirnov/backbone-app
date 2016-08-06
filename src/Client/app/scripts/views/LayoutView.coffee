@@ -27,7 +27,8 @@ module.exports = Marionette.LayoutView.extend
 
 
   initialize: ->
-    @user = new User
+    @infoViewModel = new User
+    @editViewModel = new User
 
   onBeforeRender: ->
     @_attachHeaderView()
@@ -37,12 +38,14 @@ module.exports = Marionette.LayoutView.extend
     @getRegion('modal').empty()
 
   onShowEditForm: ->
-    editView = new EditFormView model: @user
+    @editViewModel.deserialize @infoViewModel
+    editView = new EditFormView model: @editViewModel
 
     modalView = new ModalView bodyView: editView
 
-    modalView.on 'action:primary', ->
-      console.log('primary action')
+    modalView.on 'action:primary', =>
+      @infoViewModel.deserialize @editViewModel
+      modalView.close()
 
     modalView.on 'close', ->
       Backbone.history.navigate '', trigger: true
@@ -55,6 +58,6 @@ module.exports = Marionette.LayoutView.extend
     headerView.render()
 
   _attachUserInfoView: ->
-    userInfoView = new UserInfoView el: SELECTORS.USER_INFO, model: @user
+    userInfoView = new UserInfoView el: SELECTORS.USER_INFO, model: @infoViewModel
     @getRegion('userInfo').attachView userInfoView
     userInfoView.render()
