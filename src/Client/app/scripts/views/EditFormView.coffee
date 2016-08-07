@@ -39,8 +39,14 @@ module.exports = Marionette.ItemView.extend
     isFemale: @model.isFemale()
 
   modelEvents:
-    change: 'render'
+    change: 'modelChanged'
     invalid: 'setErrors'
+
+  modelChanged: ->
+    unless @model.changed?.birthday then @render()
+
+  onRender: ->
+    @transformBirthdayToText()
 
   resizeTextarea: ->
     @ui.textareas.each ->
@@ -52,7 +58,8 @@ module.exports = Marionette.ItemView.extend
     @ui.birthday.css(lineHeight: 'inherit').attr(type: 'date')[0].valueAsDate = value
 
   transformBirthdayToText: ->
-    value = if @ui.birthday.val() then moment(@ui.birthday.val()).format('LL') else ''
+    birthday = @model.get('birthday')
+    value = if birthday then moment(birthday).format('LL') else ''
     @ui.birthday.attr(type: 'text').val(value).trigger('input')
 
   setMale: ->
