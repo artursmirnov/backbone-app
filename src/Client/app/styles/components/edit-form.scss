@@ -18,6 +18,20 @@
   width: 100%;
   position: relative;
   margin-bottom: $form-group-margin-bottom;
+
+  &.validation-error {
+
+    .edit-form__label {
+      color: $form-error-color;
+    }
+
+    .edit-form__input,
+    .edit-form__input--textarea {
+      color: $form-error-color;
+      border-color: $form-error-color;
+    }
+
+  }
 }
 
 .edit-form__label {
@@ -70,6 +84,12 @@ textarea.edit-form__input--textarea {
 
   resize: none;
   overflow: hidden;
+}
+
+.edit-form__radio-container {
+  &.validation-error {
+    background-color: lighten($form-error-color, 25%);
+  }
 }
 
 .edit-form__radio {

@@ -1,6 +1,9 @@
 Marionette = require 'backbone.marionette'
 moment = require 'moment'
 
+ERROR_STATE_CLASS_NAME = 'validation-error'
+FIELD_CLASS_NAME = 'js-field'
+
 timezoneOffset = new Date().getTimezoneOffset() * 60000
 
 module.exports = Marionette.ItemView.extend
@@ -12,7 +15,7 @@ module.exports = Marionette.ItemView.extend
     name: '.js-user-name'
     birthday: '.js-user-birthday'
     email: '.js-user-email'
-    site: '.js-user-site'
+    siteUrl: '.js-user-site'
     phone: '.js-user-phone'
     skill: '.js-user-skill'
     password: '.js-user-password'
@@ -37,6 +40,7 @@ module.exports = Marionette.ItemView.extend
 
   modelEvents:
     change: 'render'
+    invalid: 'setErrors'
 
   resizeTextarea: ->
     @ui.textareas.each ->
@@ -57,12 +61,34 @@ module.exports = Marionette.ItemView.extend
   setFemale: ->
     @model.setFemale()
 
+  setErrors: ->
+    @clearErrors()
+    @model.validationError?.forEach? (attribute) =>
+      @_fieldFor(attribute).addClass(ERROR_STATE_CLASS_NAME)
+
+  clearErrors: ->
+    @_getFormFields().forEach ($field) ->
+      $field.removeClass(ERROR_STATE_CLASS_NAME)
+
   updateModel: ->
     @model.deserialize
       name: @ui.name.val()
       birthday: @ui.birthday.val()
       email: @ui.email.val()
-      siteUrl: @ui.site.val()
+      siteUrl: @ui.siteUrl.val()
       phone: @ui.phone.val()
       skill: @ui.skill.val()
+      password: @ui.password.val()
+      confirm: @ui.confirm.val()
       about: @ui.about.val()
+
+  _fieldFor: (attribute) ->
+    switch attribute
+      when 'gender'
+        @ui.genderMale.closest(".#{FIELD_CLASS_NAME}").add(@ui.genderFemale.closest(".#{FIELD_CLASS_NAME}"))
+      else
+        @ui[attribute]?.closest(".#{FIELD_CLASS_NAME}")
+
+  _getFormFields: ->
+    ['name', 'birthday', 'email', 'siteUrl', 'phone', 'skill', 'about', 'gender', 'password', 'confirm'].map (attribute) =>
+      @_fieldFor(attribute)

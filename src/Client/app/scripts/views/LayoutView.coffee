@@ -44,8 +44,13 @@ module.exports = Marionette.LayoutView.extend
     modalView = new ModalView bodyView: editView
 
     modalView.on 'action:primary', =>
-      @infoViewModel.deserialize @editViewModel
-      modalView.close()
+
+      @editViewModel.save
+        success: =>
+          @infoViewModel.deserialize @editViewModel
+          modalView.close()
+        error: =>
+          console.log @editViewModel.validationError
 
     modalView.on 'close', ->
       Backbone.history.navigate '', trigger: true

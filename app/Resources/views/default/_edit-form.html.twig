@@ -64,7 +64,7 @@
                         </div>
 
                     </div>
-                    <div class="col-xs-3 text-right">
+                    <div class="col-xs-3 text-right edit-form__radio-container js-field">
 
                         {# Gender Male #}
                         <label class="edit-form__radio js-user-gender-male <%= isMale ? 'selected' : '' %>">
@@ -72,7 +72,7 @@
                         </label>
 
                     </div>
-                    <div class="col-xs-3 text-right">
+                    <div class="col-xs-3 text-right edit-form__radio-container js-field">
 
                         {# Gender Female #}
                         <label class="edit-form__radio js-user-gender-female <%= isFemale ? 'selected' : '' %>">
@@ -90,7 +90,7 @@
 
                         {# Password #}
                         <div class="edit-form__field js-field">
-                            <input type="password" value="" class="edit-form__input js-user-password">
+                            <input type="password" value="<%= password %>" class="edit-form__input js-user-password">
                             <label class="edit-form__label">Password</label>
                         </div>
 
@@ -99,7 +99,7 @@
 
                         {# Password confirmation #}
                         <div class="edit-form__field js-field">
-                            <input type="password" value="" class="edit-form__input js-user-password-confirm">
+                            <input type="password" value="<%= confirm %>" class="edit-form__input js-user-password-confirm">
                             <label class="edit-form__label">Repeat Password</label>
                         </div>
 
