@@ -25,40 +25,35 @@ User = Backbone.Model.extend
     email: -> _.isString(@) and @match(/\w+@\w+\.\w+/)
     phone: -> _.isString(@) and @match(/\+\d{11}/) or _.isEmpty(@)
     skill: -> $.isNumeric(@) or _.isEmpty(@)
-    gender: -> @toString() is User.GENDER.MALE or @toString() is User.GENDER.FEMALE or _.isEmpty(@)
+    gender: -> parseInt(@) is User.GENDER.MALE or parseInt(@) is User.GENDER.FEMALE or _.isEmpty(@)
     password: -> not _.isEmpty(@)
     confirm: -> not _.isEmpty(@)
 
   deserialize: (data = {}) ->
     if data instanceof Backbone.Model then data = data.toJSON()
-    @_extractGender data
+    data.gender = @_normalizeGender(data.gender)
     @set(data)
 
   serialize: ->
-    gender = switch @get('gender')
-      when User.GENDER.MALE then 0
-      when User.GENDER.FEMALE then 1
-
     birthday = @get('birthday')?.split('-') or []
+    birthday = birthday.map (part) -> parseInt(part)
 
-    result =
-      user:
-        _token: @get '_token'
-        userName: @get 'name'
-        userEmail: @get 'email'
-        siteUrl: @get 'siteUrl'
-        userBirthday:
-          month: parseInt(birthday[1])
-          day: parseInt(birthday[2])
-          year: parseInt(birthday[0])
-        userGender: gender
-        userPhone: @get 'phone'
-        userSkill: @get 'skill'
-        userAbout: @get 'about'
-        password:
-          first: @get 'password'
-          second: @get 'confirm'
-    return result
+    user:
+      _token: @get '_token'
+      userName: @get 'name'
+      userEmail: @get 'email'
+      siteUrl: @get 'siteUrl'
+      userBirthday:
+        year: birthday[0]
+        month: birthday[1]
+        day: birthday[2]
+      userGender: @get 'gender'
+      userPhone: @get 'phone'
+      userSkill: @get 'skill'
+      userAbout: @get 'about'
+      password:
+        first: @get 'password'
+        second: @get 'confirm'
 
   isMale: ->
     @get('gender') is User.GENDER.MALE
@@ -71,6 +66,12 @@ User = Backbone.Model.extend
 
   setFemale: ->
     @set 'gender', User.GENDER.FEMALE
+
+  getGenderTitle: ->
+    switch true
+      when @isMale() then 'Male'
+      when @isFemale() then 'Female'
+      else ''
 
   validate: (attributes) ->
     errors = []
@@ -88,22 +89,25 @@ User = Backbone.Model.extend
     siteUrl: response['[siteUrl]']?.value
     phone: response['[userPhone]']?.value
     skill: response['[userSkill]']?.value
-    gender: response['[userGender]']?.value_label
+    gender: response['[userGender]']?.value
     about: response['[userAbout]']?.value
 
   sync: (method, model, options) ->
     options.attrs = @serialize()
     Backbone.Model.prototype.sync.call(@, method, model, options)
 
-  _extractGender: (data) ->
-    switch data.gender?.toLowerCase()
-      when User.GENDER.MALE then @setMale()
-      when User.GENDER.FEMALE then @setFemale()
-    delete data.gender
+  _normalizeGender: (gender) ->
+    switch true
+      when parseInt(gender) is User.GENDER.MALE then User.GENDER.MALE
+      when parseInt(gender) is User.GENDER.FEMALE then User.GENDER.FEMALE
+      when _.isString(gender) and gender.toLowerCase() is 'male' then User.GENDER.MALE
+      when _.isString(gender) and gender.toLowerCase() is 'female' then User.GENDER.FEMALE
+      else null
+
 
 
 User.GENDER =
-  MALE: 'male'
-  FEMALE: 'female'
+  MALE: 0
+  FEMALE: 1
 
 module.exports = User

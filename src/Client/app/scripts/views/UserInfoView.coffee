@@ -28,7 +28,7 @@ module.exports = Marionette.ItemView.extend
 
   _updateField: (fieldName, fieldValue) ->
     switch fieldName
-      when 'gender' then fieldValue = fieldValue[0].toUpperCase() + fieldValue.slice(1)
+      when 'gender' then fieldValue = @model.getGenderTitle()
     @ui[fieldName]?.text? fieldValue
 
   _extractViewData: ->
