@@ -12,6 +12,7 @@ module.exports = Marionette.ItemView.extend
 
   ui:
     textareas: 'textarea'
+    token: '#user__token'
     name: '.js-user-name'
     birthday: '.js-user-birthday'
     email: '.js-user-email'
@@ -46,6 +47,7 @@ module.exports = Marionette.ItemView.extend
     unless @model.changed?.birthday then @render()
 
   onRender: ->
+    @model.set('_token', @ui.token.val())
     @transformBirthdayToText()
 
   resizeTextarea: ->
@@ -69,6 +71,7 @@ module.exports = Marionette.ItemView.extend
     @model.setFemale()
 
   setErrors: ->
+    @trigger 'validation:error'
     @clearErrors()
     @model.validationError?.forEach? (attribute) =>
       @_fieldFor(attribute).addClass(ERROR_STATE_CLASS_NAME)

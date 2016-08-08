@@ -15,7 +15,8 @@
 
     <div id="modal-outlet"></div>
 
-    <!-- <p>Url for ajax form submit: {{ path('process.form') }}</p> -->
+    <input type="hidden" id="form-submit-url" value="{{ path('process.form') }}">
+    <!-- {{ form_widget(form) }} -->
 {% endblock %}
 
 {% block stylesheets %}

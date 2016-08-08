@@ -2,6 +2,7 @@
 @import "../bootstrap";
 @import "../mixins/stretch-to-offset-parent";
 @import "../mixins/no-button-outline";
+@import "../material-icons";
 
 .modal-layout {
   @include stretch-to-offset-parent();
@@ -49,6 +50,22 @@
   position: relative;
   height: 25px;
   overflow: hidden;
+}
+
+.modal-layout__spinner {
+  color: $form-input-active-color;
+  vertical-align: sub;
+  display: none;
+
+  &:before {
+    @extend .material-icons;
+    content: "flare";
+    animation: spin 1s linear infinite;
+  }
+
+  &.spin {
+    display: inline-block;
+  }
 }
 
 .modal-layout__action {
@@ -102,4 +119,10 @@
     top: 0;
   }
 
+}
+
+@keyframes spin {
+  100% {
+    transform:rotate(360deg);
+  }
 }

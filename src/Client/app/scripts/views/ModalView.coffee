@@ -1,5 +1,7 @@
 Marionette = require 'backbone.marionette'
 
+SPIN_CLASS_NAME = 'spin'
+
 module.exports = Marionette.LayoutView.extend
   template: '#modal-template'
 
@@ -15,6 +17,7 @@ module.exports = Marionette.LayoutView.extend
   ui:
     primaryAction: '.js-primary-action'
     secondaryAction: '.js-secondary-action'
+    spinner: '.js-spinner'
 
   triggers:
     'click @ui.primaryAction': 'action:primary'
@@ -27,6 +30,7 @@ module.exports = Marionette.LayoutView.extend
     if bodyView instanceof Marionette.View
       @body = bodyView
       @title = bodyView.title || ''
+      bodyView.on 'validation:error', => @hideSpinner()
 
     @primaryActionTitle = options.primaryActionTitle || @primaryActionTitle
     @secondaryActionTitle = options.secondaryActionTitle || @secondaryActionTitle
@@ -46,4 +50,11 @@ module.exports = Marionette.LayoutView.extend
     @trigger 'open'
 
   close: ->
+    @hideSpinner()
     @trigger 'close'
+
+  showSpinner: ->
+    @ui.spinner.addClass(SPIN_CLASS_NAME)
+
+  hideSpinner: ->
+    @ui.spinner.removeClass(SPIN_CLASS_NAME)

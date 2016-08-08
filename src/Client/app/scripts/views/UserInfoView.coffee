@@ -38,4 +38,4 @@ module.exports = Marionette.ItemView.extend
     return data
 
   _extractField: (fieldName) ->
-    $.trim @ui[fieldName]?.text?()
+    $.trim(@ui[fieldName]?.text?() or @ui[fieldName]?.val?())

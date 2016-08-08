@@ -25,6 +25,9 @@ module.exports = Marionette.LayoutView.extend
     modal:
       regionClass: ModalRegion
 
+  ui:
+    submitUrl: '#form-submit-url'
+
 
   initialize: ->
     @infoViewModel = new User
@@ -33,6 +36,9 @@ module.exports = Marionette.LayoutView.extend
   onBeforeRender: ->
     @_attachHeaderView()
     @_attachUserInfoView()
+
+  onRender: ->
+    @editViewModel.url = @ui.submitUrl.val()
 
   onShowUserInfo: ->
     @getRegion('modal').empty()
@@ -45,12 +51,13 @@ module.exports = Marionette.LayoutView.extend
 
     modalView.on 'action:primary', =>
 
-      @editViewModel.save
+      modalView.showSpinner()
+      @editViewModel.save null,
         success: =>
           @infoViewModel.deserialize @editViewModel
           modalView.close()
         error: =>
-          console.log @editViewModel.validationError
+          modalView.hideSpinner()
 
     modalView.on 'close', ->
       Backbone.history.navigate '', trigger: true
