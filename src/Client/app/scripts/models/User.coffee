@@ -1,8 +1,10 @@
 Backbone = require 'backbone'
+moment = require 'moment'
 _ = require 'underscore'
 
 MIN_DATE = new Date '1950-01-01'
 MAX_DATE = Date.now()
+DEFAULT_MOMENT_BIRTHDAY_FORMAT = 'DD MMMM YYYY'
 
 User = Backbone.Model.extend
 
@@ -21,7 +23,7 @@ User = Backbone.Model.extend
 
   validators:
     name: -> _.isString(@) and not _.isEmpty(@)
-    birthday: -> MAX_DATE > new Date(@) > MIN_DATE or _.isEmpty(@)
+    birthday: -> MAX_DATE > @ > MIN_DATE or _.isEmpty(@)
     email: -> _.isString(@) and @match(/\w+@\w+\.\w+/)
     phone: -> _.isString(@) and @match(/\+\d{11}/) or _.isEmpty(@)
     skill: -> $.isNumeric(@) or _.isEmpty(@)
@@ -31,22 +33,21 @@ User = Backbone.Model.extend
 
   deserialize: (data = {}) ->
     if data instanceof Backbone.Model then data = data.toJSON()
-    data.gender = @_normalizeGender(data.gender)
+    if data.gender then data.gender = @_normalizeGender(data.gender)
+    if data.birthday then data.birthday = @_parseBirthday(data.birthday)
     @set(data)
 
   serialize: ->
-    birthday = @get('birthday')?.split('-') or []
-    birthday = birthday.map (part) -> parseInt(part)
-
+    birthday = @get 'birthday'
     user:
       _token: @get '_token'
       userName: @get 'name'
       userEmail: @get 'email'
       siteUrl: @get 'siteUrl'
       userBirthday:
-        year: birthday[0]
-        month: birthday[1]
-        day: birthday[2]
+        year: birthday?.getFullYear()
+        month: birthday?.getMonth() + 1
+        day: birthday?.getDate()
       userGender: @get 'gender'
       userPhone: @get 'phone'
       userSkill: @get 'skill'
@@ -73,6 +74,10 @@ User = Backbone.Model.extend
       when @isFemale() then 'Female'
       else ''
 
+  getBirthdayTitle: (format = DEFAULT_MOMENT_BIRTHDAY_FORMAT) ->
+    birthday = @get 'birthday'
+    if birthday then moment(birthday).format(format) else ''
+
   validate: (attributes) ->
     errors = []
     Object.keys(attributes).forEach (key) =>
@@ -84,7 +89,7 @@ User = Backbone.Model.extend
 
   parse: (response, options) ->
     name: response['[userName]']?.value
-    birthday: "#{response['[userBirthday][year]']?.value}-#{response['[userBirthday][month]']?.value}-#{response['[userBirthday][day]']?.value}"
+    birthday: @_parseBirthday("#{response['[userBirthday][year]']?.value}-#{response['[userBirthday][month]']?.value}-#{response['[userBirthday][day]']?.value}")
     email: response['[userEmail]']?.value
     siteUrl: response['[siteUrl]']?.value
     phone: response['[userPhone]']?.value
@@ -104,6 +109,13 @@ User = Backbone.Model.extend
       when _.isString(gender) and gender.toLowerCase() is 'female' then User.GENDER.FEMALE
       else null
 
+  _parseBirthday: (date) ->
+    switch true
+      when not isNaN(Date.parse(date))
+        new Date(Date.parse(date) - new Date().getTimezoneOffset() * 60000)
+      when moment(date, DEFAULT_MOMENT_BIRTHDAY_FORMAT).isValid()
+        moment(date, DEFAULT_MOMENT_BIRTHDAY_FORMAT).utc().toDate()
+      else null
 
 
 User.GENDER =

@@ -1,10 +1,7 @@
 Marionette = require 'backbone.marionette'
-moment = require 'moment'
 
 ERROR_STATE_CLASS_NAME = 'validation-error'
 FIELD_CLASS_NAME = 'js-field'
-
-timezoneOffset = new Date().getTimezoneOffset() * 60000
 
 module.exports = Marionette.ItemView.extend
   template: '#edit-form-template'
@@ -38,6 +35,7 @@ module.exports = Marionette.ItemView.extend
   templateHelpers: ->
     isMale: @model.isMale()
     isFemale: @model.isFemale()
+    birthdayTitle: @model.getBirthdayTitle()
 
   modelEvents:
     change: 'modelChanged'
@@ -48,7 +46,6 @@ module.exports = Marionette.ItemView.extend
 
   onRender: ->
     @model.set('_token', @ui.token.val())
-    @transformBirthdayToText()
 
   resizeTextarea: ->
     @ui.textareas.each ->
@@ -56,13 +53,11 @@ module.exports = Marionette.ItemView.extend
       @style.height = @scrollHeight + 'px'
 
   transformBirthdayToDate: ->
-    value = moment(@ui.birthday.val() or undefined, 'LL').subtract(timezoneOffset).toDate()
-    @ui.birthday.css(lineHeight: 'inherit').attr(type: 'date')[0].valueAsDate = value
+    @ui.birthday.val('').css(lineHeight: 'inherit').attr(type: 'date')[0].valueAsDate = @model.get 'birthday'
 
   transformBirthdayToText: ->
-    birthday = @model.get('birthday')
-    value = if birthday then moment(birthday).format('LL') else ''
-    @ui.birthday.attr(type: 'text').val(value).trigger('input')
+    @updateModel()
+    @ui.birthday.attr(type: 'text').val(@model.getBirthdayTitle()).trigger('input')
 
   setMale: ->
     @model.setMale()

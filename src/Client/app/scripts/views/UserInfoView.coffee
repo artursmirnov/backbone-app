@@ -29,6 +29,7 @@ module.exports = Marionette.ItemView.extend
   _updateField: (fieldName, fieldValue) ->
     switch fieldName
       when 'gender' then fieldValue = @model.getGenderTitle()
+      when 'birthday' then fieldValue = @model.getBirthdayTitle()
     @ui[fieldName]?.text? fieldValue
 
   _extractViewData: ->
