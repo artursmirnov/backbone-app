@@ -1,6 +1,7 @@
 Marionette = require 'backbone.marionette'
 
 ERROR_STATE_CLASS_NAME = 'validation-error'
+SELECTED_GENDER_CLASS_NAME = 'selected'
 FIELD_CLASS_NAME = 'js-field'
 
 module.exports = Marionette.ItemView.extend
@@ -33,8 +34,6 @@ module.exports = Marionette.ItemView.extend
     'change textarea': 'updateModel'
 
   templateHelpers: ->
-    isMale: @model.isMale()
-    isFemale: @model.isFemale()
     birthdayTitle: @model.getBirthdayTitle()
 
   modelEvents:
@@ -42,13 +41,14 @@ module.exports = Marionette.ItemView.extend
     invalid: 'setErrors'
 
   modelChanged: ->
-    unless @model.changed?.birthday then @render()
+    unless @model.changed?.birthday then @updateView()
 
   onRender: ->
+    @model.set '_token', @ui.token.val()
+    @_switchGenderField()
     setTimeout =>
       @resizeTextarea()
     , 0
-    @model.set('_token', @ui.token.val())
 
   resizeTextarea: ->
     @ui.textareas.each ->
@@ -89,6 +89,21 @@ module.exports = Marionette.ItemView.extend
       password: @ui.password.val()
       confirm: @ui.confirm.val()
       about: @ui.about.val()
+
+  updateView: ->
+    Object.keys(@model.changed).forEach (key) =>
+      @_updateField key, @model.get(key)
+
+  _updateField: (fieldName, fieldValue) ->
+    switch fieldName
+      when 'gender' then @_switchGenderField()
+      else @ui[fieldName]?.val? fieldValue
+
+  _switchGenderField: ->
+    @ui.genderMale.add(@ui.genderFemale).removeClass SELECTED_GENDER_CLASS_NAME
+    switch true
+      when @model.isMale() then @ui.genderMale.addClass SELECTED_GENDER_CLASS_NAME
+      when @model.isFemale() then @ui.genderFemale.addClass SELECTED_GENDER_CLASS_NAME
 
   _fieldFor: (attribute) ->
     switch attribute

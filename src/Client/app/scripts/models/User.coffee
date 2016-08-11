@@ -26,7 +26,7 @@ User = Backbone.Model.extend
     birthday: -> MAX_DATE > @ > MIN_DATE or _.isEmpty(@)
     email: -> _.isString(@) and @match(/\w+@\w+\.\w+/)
     phone: -> _.isString(@) and @match(/\+\d{11}/) or _.isEmpty(@)
-    skill: -> $.isNumeric(@) or _.isEmpty(@)
+    skill: -> $.isNumeric(@) and @ >= 0 or _.isEmpty(@)
     gender: -> parseInt(@) is User.GENDER.MALE or parseInt(@) is User.GENDER.FEMALE or _.isEmpty(@)
     password: -> not _.isEmpty(@)
     confirm: -> not _.isEmpty(@)
@@ -38,7 +38,7 @@ User = Backbone.Model.extend
     @set(data)
 
   serialize: ->
-    birthday = @get 'birthday'
+    birthday = @get('birthday') or null
     user:
       _token: @get '_token'
       userName: @get 'name'
@@ -83,7 +83,7 @@ User = Backbone.Model.extend
     Object.keys(attributes).forEach (key) =>
       value = attributes[key]
       validator = @validators[key]
-      if typeof validator is 'function' and not validator.apply(value) then errors.push key
+      if typeof validator is 'function' and not validator.apply(value or {}) then errors.push key
     if attributes.password is not attributes.confirm then errors.push 'confirm'
     if errors.length then return errors
 
