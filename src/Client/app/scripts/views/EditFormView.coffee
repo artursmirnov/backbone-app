@@ -45,6 +45,9 @@ module.exports = Marionette.ItemView.extend
     unless @model.changed?.birthday then @render()
 
   onRender: ->
+    setTimeout =>
+      @resizeTextarea()
+    , 0
     @model.set('_token', @ui.token.val())
 
   resizeTextarea: ->
