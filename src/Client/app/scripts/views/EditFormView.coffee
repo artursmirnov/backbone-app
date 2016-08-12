@@ -39,6 +39,7 @@ module.exports = Marionette.ItemView.extend
   modelEvents:
     change: 'modelChanged'
     invalid: 'setErrors'
+    valid: 'clearErrors'
 
   modelChanged: ->
     unless @model.changed?.birthday then @updateView()
@@ -89,6 +90,7 @@ module.exports = Marionette.ItemView.extend
       password: @ui.password.val()
       confirm: @ui.confirm.val()
       about: @ui.about.val()
+    @model.validateChanged()
 
   updateView: ->
     Object.keys(@model.changed).forEach (key) =>

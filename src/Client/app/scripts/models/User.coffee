@@ -24,12 +24,17 @@ User = Backbone.Model.extend
   validators:
     name: -> _.isString(@) and not _.isEmpty(@)
     birthday: -> MAX_DATE > @ > MIN_DATE or _.isEmpty(@)
-    email: -> _.isString(@) and @match(/\w+@\w+\.\w+/)
-    phone: -> _.isString(@) and @match(/\+\d{11}/) or _.isEmpty(@)
+    email: -> _.isString(@) and @match(/^\w+@\w+\.\w+$/)
+    phone: -> _.isString(@) and @match(/^\+\d{11}$/) or _.isEmpty(@)
     skill: -> $.isNumeric(@) and @ >= 0 or _.isEmpty(@)
     gender: -> parseInt(@) is User.GENDER.MALE or parseInt(@) is User.GENDER.FEMALE or _.isEmpty(@)
     password: -> not _.isEmpty(@)
     confirm: -> not _.isEmpty(@)
+
+  validationError: []
+
+  initialize: ->
+    this.bind 'error', => @_handleRequestError.apply(@, arguments)
 
   deserialize: (data = {}) ->
     if data instanceof Backbone.Model then data = data.toJSON()
@@ -84,8 +89,16 @@ User = Backbone.Model.extend
       value = attributes[key]
       validator = @validators[key]
       if typeof validator is 'function' and not validator.apply(value or {}) then errors.push key
-    if attributes.password is not attributes.confirm then errors.push 'confirm'
+    if attributes.password isnt attributes.confirm then errors.push 'confirm'
     if errors.length then return errors
+
+  validateChanged: ->
+    changed = _.clone(@changed) or {}
+    if changed.password and not changed.confirm then changed.confirm = @get 'confirm'
+    if changed.confirm and not changed.password then changed.password = @get 'password'
+    @validationError = _.difference @validationError, Object.keys(changed)
+    @validationError = _.union @validationError, @validate(changed)
+    @trigger if @validationError.length is 0 then 'valid' else 'invalid'
 
   parse: (response, options) ->
     name: response['[userName]']?.value
@@ -116,6 +129,15 @@ User = Backbone.Model.extend
       when moment(date, DEFAULT_MOMENT_BIRTHDAY_FORMAT).isValid()
         moment(date, DEFAULT_MOMENT_BIRTHDAY_FORMAT).utc().toDate()
       else null
+
+  _handleRequestError: (model, response, options) ->
+    responseBody = response?.responseJSON?.errors?.children or {}
+    errors = []
+    for field, content of responseBody
+      if content?.errors?.length > 0
+        errors.push if field is 'siteUrl' then field else field.replace('user', '').toLowerCase()
+    @validationError = errors
+    @trigger 'invalid'
 
 
 User.GENDER =
