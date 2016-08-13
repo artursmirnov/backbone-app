@@ -5,6 +5,8 @@
 
 .edit-form {
   @extend .form-horizontal;
+
+  margin-bottom: 75px;
 }
 
 .edit-form__title {
@@ -82,6 +84,7 @@
 textarea.edit-form__input--textarea {
   @extend .edit-form__input;
 
+  max-height: 350px;
   resize: none;
   overflow: hidden;
 }
