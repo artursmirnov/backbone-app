@@ -3,6 +3,7 @@ $body-bg: #fafafb;
 $card-bg: #ffffff;
 $modal-layout-backdrop-bg: rgba(0, 0, 0, 0.7);
 $modal-layout-dialog-bg: $body-bg;
+$alert-danger-bg: transparent;
 
 // Fonts
 $font-family-base: "Roboto";
@@ -16,6 +17,7 @@ $card-border-color: #f0f0f0;
 $form-input-color: #b9b9b9;
 $form-input-active-color: #26abec;
 $form-error-color: #ff5555;
+$alert-danger-text: $form-error-color;
 
 // Layout
 $grid-columns: 10;
@@ -24,6 +26,7 @@ $app-min-width: 350px;
 $modal-layout-max-width: 1440px;
 $modal-layout-body-max-width: 790px;
 $form-group-margin-bottom: 22px;
+$alert-border-radius: 0;
 
 // Z-index
 $form-input-label-z-index: 1;

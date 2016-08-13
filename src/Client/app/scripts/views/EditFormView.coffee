@@ -22,6 +22,7 @@ module.exports = Marionette.ItemView.extend
     about: '.js-user-about'
     genderMale: '.js-user-gender-male'
     genderFemale: '.js-user-gender-female'
+    errorMessage: '.js-error-message'
 
 
   events:
@@ -70,10 +71,13 @@ module.exports = Marionette.ItemView.extend
   setErrors: ->
     @trigger 'validation:error'
     @clearErrors()
+    @ui.errorMessage.show()
     @model.validationError?.forEach? (attribute) =>
       @_fieldFor(attribute).addClass(ERROR_STATE_CLASS_NAME)
 
   clearErrors: ->
+    @trigger 'validation:success'
+    @ui.errorMessage.hide()
     @_getFormFields().forEach ($field) ->
       $field.removeClass(ERROR_STATE_CLASS_NAME)
 
