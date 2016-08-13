@@ -31,18 +31,16 @@ module.exports = Marionette.ItemView.extend
     'click @ui.genderMale': 'setMale'
     'click @ui.genderFemale': 'setFemale'
     'change input': 'updateModel'
+    'keyup input': 'updateModel'
+    'click input': 'updateModel'
     'change textarea': 'updateModel'
 
   templateHelpers: ->
     birthdayTitle: @model.getBirthdayTitle()
 
   modelEvents:
-    change: 'modelChanged'
     invalid: 'setErrors'
     valid: 'clearErrors'
-
-  modelChanged: ->
-    unless @model.changed?.birthday then @updateView()
 
   onRender: ->
     @model.set '_token', @ui.token.val()

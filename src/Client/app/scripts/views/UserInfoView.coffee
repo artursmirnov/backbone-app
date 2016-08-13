@@ -30,6 +30,8 @@ module.exports = Marionette.ItemView.extend
     switch fieldName
       when 'gender' then fieldValue = @model.getGenderTitle()
       when 'birthday' then fieldValue = @model.getBirthdayTitle()
+      when 'siteUrl' then @ui[fieldName]?.attr 'href', fieldValue
+      when 'email' then @ui[fieldName]?.attr 'href', "mailto:#{fieldValue}"
     @ui[fieldName]?.text? fieldValue
 
   _extractViewData: ->

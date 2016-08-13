@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 moment = require 'moment'
 _ = require 'underscore'
 
-MIN_DATE = new Date '1950-01-01'
+MIN_DATE = new Date '1900-01-01'
 MAX_DATE = Date.now()
 DEFAULT_MOMENT_BIRTHDAY_FORMAT = 'DD MMMM YYYY'
 
@@ -23,9 +23,10 @@ User = Backbone.Model.extend
 
   validators:
     name: -> _.isString(@) and not _.isEmpty(@)
-    birthday: -> MAX_DATE > @ > MIN_DATE or _.isEmpty(@)
-    email: -> _.isString(@) and @match(/^\w+@\w+\.\w+$/)
-    phone: -> _.isString(@) and @match(/^\+\d{11}$/) or _.isEmpty(@)
+    birthday: -> MAX_DATE > @ > MIN_DATE or @ instanceof Date isnt true and _.isEmpty(@)
+    email: -> _.isString(@) and /^.+@.+\..+$/.test(@)
+    phone: -> _.isString(@) and /^\+\d{11}$/.test(@) or _.isEmpty(@)
+    siteUrl: -> _.isString(@) and /.+\..+/.test(@) or _.isEmpty(@)
     skill: -> $.isNumeric(@) and @ >= 0 or _.isEmpty(@)
     gender: -> parseInt(@) is User.GENDER.MALE or parseInt(@) is User.GENDER.FEMALE or _.isEmpty(@)
     password: -> not _.isEmpty(@)
