@@ -111,6 +111,18 @@ User = Backbone.Model.extend
     gender: response['[userGender]']?.value
     about: response['[userAbout]']?.value
 
+  save: ->
+    @validationError = @validate(@attributes)
+    if @validationError?.length > 0
+      @trigger 'validationError'
+      @trigger 'invalid'
+      return
+    else
+      @trigger 'validationSuccess'
+      @trigger 'valid'
+    Backbone.Model.prototype.save.apply(@, arguments)
+
+
   sync: (method, model, options) ->
     options.attrs = @serialize()
     Backbone.Model.prototype.sync.call(@, method, model, options)
@@ -139,6 +151,7 @@ User = Backbone.Model.extend
         errors.push if field is 'siteUrl' then field else field.replace('user', '').toLowerCase()
     @validationError = errors
     @trigger 'invalid'
+    @trigger 'validationError'
 
 
 User.GENDER =

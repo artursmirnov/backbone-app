@@ -42,6 +42,8 @@ module.exports = Marionette.ItemView.extend
   modelEvents:
     invalid: 'setErrors'
     valid: 'clearErrors'
+    validationError: 'showErrorMessage'
+    validationSuccess: 'hideErrorMessage'
 
   onRender: ->
     @model.set '_token', @ui.token.val()
@@ -71,13 +73,12 @@ module.exports = Marionette.ItemView.extend
   setErrors: ->
     @trigger 'validation:error'
     @clearErrors()
-    @ui.errorMessage.show()
     @model.validationError?.forEach? (attribute) =>
       @_fieldFor(attribute).addClass(ERROR_STATE_CLASS_NAME)
 
   clearErrors: ->
     @trigger 'validation:success'
-    @ui.errorMessage.hide()
+    if @model.validationError?.length is 0 then @hideErrorMessage()
     @_getFormFields().forEach ($field) ->
       $field.removeClass(ERROR_STATE_CLASS_NAME)
 
@@ -97,6 +98,14 @@ module.exports = Marionette.ItemView.extend
   updateView: ->
     Object.keys(@model.changed).forEach (key) =>
       @_updateField key, @model.get(key)
+
+  showErrorMessage: ->
+    @trigger 'validation:error'
+    @ui.errorMessage.show()
+
+  hideErrorMessage: ->
+    @trigger 'validation:success'
+    @ui.errorMessage.hide()
 
   _updateField: (fieldName, fieldValue) ->
     switch fieldName
