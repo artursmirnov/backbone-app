@@ -44,11 +44,6 @@ mv /usr/local/bin/composer.phar /usr/local/bin/composer
 # Set up the project
 ----
 
-### Get code
----
-
-``` git clone git@github.com:payeverworldwide/test-task-frontend.git <target directory name> ```
-
 ### Configuration
 
 Install vendors:
